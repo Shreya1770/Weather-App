@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather_app/models/weather_model.dart';
 
 class WeatherServices{
-  final String apikey="REMOVED";
+ 
   Future<Weather> fetchweather(String cityname) async{
     final city = Uri.encodeComponent(cityname.trim());
-    final url=Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apikey');
+    final url=Uri.parse('${dotenv.env["ENDPOINT"]}?q=$city&appid=${dotenv.env['APIKEY']}');
 
     final response=await http.get(url);
     print(response.body);
